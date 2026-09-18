@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-9ELECNBR97"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-9ELECNBR97");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>LPC AI Assistant</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/ai-bot-fav/apple-touch-icon.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/ai-bot-fav/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/ai-bot-fav/favicon-16x16.png"
+    />
+
+    <link rel="manifest" href="images/ai-bot-fav/fav-site.webmanifest" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Source Serif 4", serif;
+        background: linear-gradient(135deg, #0b1f3a 0%, #121212 100%);
+        color: #ffffff;
+        min-height: 100vh;
+      }
+
+      /* CSS for section section:Header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(18, 18, 18, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      /* NavBar */
+      .nav-container {
+        width: 90%;
+        max-width: 1250px;
+        margin: auto;
+      }
+
+      .logo {
+        width: 90px;
+        height: auto;
+      }
+
+      .mobile-nav-toggle {
+        display: none;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 0;
+        gap: 40px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: #d7d7d7;
+        text-decoration: none;
+        transition: 0.3s ease;
+        font-size: 16px;
+      }
+
+      .nav-links a:hover {
+        color: #e2ac18;
+      }
+
+      .nav-btn {
+        background: #ffffff;
+        color: #121212 !important;
+        padding: 8px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+      }
+
+      .nav-btn:hover {
+        background: #e2ac18;
+        color: #121212 !important;
+        transform: translateY(-3px);
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+
+      @media (max-width: 1148px) {
+        header {
+          padding: 20px;
+        }
+
+        .navbar {
+          gap: 80px;
+        }
+
+        .mobile-nav {
+          display: none;
+        }
+      }
+
+      @media (max-width: 925px) {
+        header {
+          padding: 20px;
+          gap: 60px;
+        }
+        .nav-links {
+          font-size: 10px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar {
+          display: flex;
+          gap: 20px;
+        }
+
+        .nav-links {
+          position: absolute;
+          top: 100px;
+          right: 0;
+          background: linear-gradient(135deg, #0b1f3a 0%, #121212 100%);
+          width: 220px;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          display: none;
+        }
+
+        .nav-links.show {
+          display: flex;
+          color: #ffffff;
+          z-index: 9999;
+        }
+
+        .nav-links a {
+          color: #ffffff;
+        }
+
+        .nav-btn {
+          background: #e2ac18;
+          color: #121212 !important;
+          padding: 6px 16px;
+          border-radius: 14px;
+          font-weight: 700;
+        }
+
+        .mobile-nav-toggle {
+          display: block;
+          color: #d7d7d7;
+          background: var(--primary-green);
+          border: none;
+          padding: 8px 16px;
+          border-radius: 5px;
+          font-family: var(--font-main);
+          font-weight: 700;
+          cursor: pointer;
+        }
+      }
+
+      .chat-container {
+        width: 100%;
+        max-width: 1200px;
+        background: #0b1f3a;
+        border-radius: 28px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin: auto;
+        margin-bottom: 50px;
+        padding: 220px 70px 120px;
+      }
+
+      .chat-header {
+        padding: 28px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .chat-header h1 {
+        font-size: 32px;
+        color: #ffffff;
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 30px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .bot {
+        background: #121212;
+        align-self: flex-start;
+      }
+
+      .user {
+        background: #e2ac18;
+        color: #121212;
+        align-self: flex-end;
+        font-weight: 600;
+      }
+
+      .chat-input {
+        display: flex;
+        padding: 25px 0px;
+        gap: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        justify-content: space-between;
+      }
+
+      .chat-input textarea {
+        flex: 1;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: #121212;
+        color: #ffffff;
+        font-family: "Source Serif 4", serif;
+      }
+
+      #userInput {
+        width: 100%;
+        min-height: 50px;
+        padding: 12px;
+        border-radius: 10px;
+        resize: none;
+      }
+      /* Chat Actions */
+      .chat-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      /* Voice Search Button */
+
+      #micButton {
+        background: #ffffff;
+        border: none;
+        padding: 8px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        align-self: center;
+        height: 40px;
+        width: 40px;
+        display: flex;
+      }
+
+      #micButton.recording {
+        background: red;
+        color: white;
+      }
+
+      #micButton img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .chat-actions button {
+        padding: 16px 28px;
+        border: none;
+        border-radius: 12px;
+        background: #e2ac18;
+        font-weight: 700;
+        cursor: pointer;
+        height: 40px;
+        align-self: center;
+      }
+
+      /* Typing indicator styles */
+      .typing {
+        font-size: 14px;
+        color: #888;
+        margin: 10px 0;
+        font-style: italic;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .dots::after {
+        content: "";
+        animation: dots 1.5s steps(4, end) infinite;
+      }
+
+      @keyframes dots {
+        0% {
+          content: "";
+        }
+        25% {
+          content: ".";
+        }
+        50% {
+          content: "..";
+        }
+        75% {
+          content: "...";
+        }
+      }
+
+      @media (max-width: 768px) {
+        .chat-container {
+          padding: 180px 20px 100px;
+        }
+
+        .chat-header h1 {
+          font-size: 24px;
+        }
+
+        .message {
+          max-width: 100%;
+          padding: 14px 18px;
+          font-size: 14px;
+        }
+
+        .chat-input textarea {
+          padding: 12px;
+          font-size: 14px;
+        }
+
+        .chat-input button {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .chat-container {
+          padding: 150px 15px 80px;
+        }
+
+        .chat-header h1 {
+          font-size: 20px;
+        }
+
+        .message.bot {
+          width: 100%;
+          max-width: 1000px;
+        }
+
+        .chat-input textarea {
+          padding: 10px;
+          font-size: 12px;
+        }
+
+        .chat-input button {
+          padding: 10px 16px;
+          font-size: 12px;
+        }
+      }
+      @media (max-width: 350px) {
+        .chat-container {
+          padding: 120px 10px 60px;
+        }
+
+        .chat-header h1 {
+          font-size: 18px;
+        }
+
+        .message.bot {
+          width: 100%;
+          max-width: 1000px;
+        }
+
+        .chat-input textarea {
+          padding: 8px;
+          font-size: 10px;
+        }
+
+        .chat-input button {
+          padding: 8px 12px;
+          font-size: 10px;
+        }
+      }
+      @media (max-width: 300px) {
+        .message.bot {
+          width: 100%;
+          max-width: 1000px;
+        }
+      }
+      /* Loader styles */
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #e2ac18;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+      /* Message bubble styles */
+      .message {
+        max-width: 70%;
+        padding: 12px 16px;
+        margin: 8px;
+        border-radius: 18px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        font-size: 15px;
+      }
+
+      /* user bubble */
+      .message.user {
+        background: #e2ac18;
+        color: #0b1f3a;
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+      }
+
+      /* bot bubble */
+      .message.bot {
+        background: #f1f1f1;
+        color: #111;
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+      }
+
+      footer {
+        background: #0b1f3a;
+        padding: 40px 0;
+        text-align: center;
+        color: #cfcfcf;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="nav-container">
+        <div class="navbar">
+          <a href="https://lpcltd.com/"
+            ><img class="logo" src="images/Logo_gold.png" alt="LPC Ltd."
+          /></a>
+
+          <!-- Mobile Hamburger Icon -->
+          <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+            ☰
+          </button>
+
+          <div class="nav-links">
+            <a href="https://lpcltd.com/request-expert-support">
+              Request Expert Support
+            </a>
+            <a href="https://lpcltd.com/contact">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>LPC Ltd. AI Assistant</h1>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          Hello. I am the LPC AI Assistant. I can answer questions related to
+          our legal, compliance, privacy, governance, and regulatory services.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <textarea id="userInput" placeholder="Ask a question..."></textarea>
+
+        <div class="chat-actions">
+          <button type="button" id="micButton" onclick="startVoiceTyping()">
+            <img src="/images/microphone-black-shape.svg" alt="Voice Search" />
+          </button>
+
+          <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <div id="typingIndicator" class="typing hidden">
+          LPC is typing<span class="dots">...</span>
+        </div>
+
+        <div id="loader" class="loader hidden"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>© 2026 Law, Privacy & Compliance Ltd. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileNavToggle = document.querySelector(".mobile-nav-toggle");
+        const navbar = document.querySelector(".nav-links");
+
+        mobileNavToggle.addEventListener("click", () => {
+          navbar.classList.toggle("show");
+        });
+      });
+
+      const allowedTopics = [
+        "privacy",
+        "gdpr",
+        "law",
+        "legal",
+        "compliance",
+        "corporate",
+        "governance",
+        "contracts",
+        "regulatory",
+        "data protection",
+        "ai governance",
+        "shareholder",
+        "business",
+        "consultation",
+        "certification",
+      ];
+
+      // Add event listener for Enter key in the input field
+
+      document
+        .getElementById("userInput")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+          }
+        });
+
+      async function sendMessage() {
+        const input = document.getElementById("userInput");
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage(message, "user");
+        input.value = "";
+
+        document.getElementById("typingIndicator").classList.remove("hidden");
+        document.getElementById("loader").classList.remove("hidden");
+
+        try {
+          const response = await fetch("chat.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
+          });
+
+          const data = await response.json();
+
+          document.getElementById("typingIndicator").classList.add("hidden");
+          document.getElementById("loader").classList.add("hidden");
+
+          addMessage(data.reply, "bot");
+        } catch (err) {
+          document.getElementById("typingIndicator").classList.add("hidden");
+          document.getElementById("loader").classList.add("hidden");
+
+          addMessage("Something went wrong. Please try again.", "bot");
+        }
+      }
+
+      function addMessage(text, type) {
+        const container = document.getElementById("chatMessages");
+
+        const div = document.createElement("div");
+
+        div.classList.add("message", type);
+
+        div.innerHTML = text;
+
+        container.appendChild(div);
+
+        container.scrollTop = container.scrollHeight;
+      }
+
+      /* Voice Recognition */
+
+      let recognition;
+      let isRecording = false;
+
+      function startVoiceTyping() {
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+          alert("Voice recognition is not supported in this browser.");
+          return;
+        }
+
+        // Stop if already recording
+        if (isRecording && recognition) {
+          recognition.stop();
+          return;
+        }
+
+        recognition = new SpeechRecognition();
+
+        recognition.lang = "en-NG";
+
+        recognition.continuous = true;
+
+        recognition.interimResults = true;
+
+        const textarea = document.getElementById("userInput");
+
+        const micButton = document.getElementById("micButton");
+
+        micButton.classList.add("recording");
+
+        isRecording = true;
+
+        recognition.onresult = function (event) {
+          let finalTranscript = "";
+          let interimTranscript = "";
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript + " ";
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+
+          textarea.value = textarea.dataset.previousText || "";
+
+          textarea.value += finalTranscript + interimTranscript;
+
+          textarea.scrollTop = textarea.scrollHeight;
+        };
+
+        recognition.onstart = function () {
+          textarea.dataset.previousText = textarea.value
+            ? textarea.value + " "
+            : "";
+        };
+
+        recognition.onend = function () {
+          micButton.classList.remove("recording");
+
+          isRecording = false;
+        };
+
+        recognition.onerror = function (event) {
+          console.error(event.error);
+
+          micButton.classList.remove("recording");
+
+          isRecording = false;
+        };
+
+        recognition.start();
+      }
+    </script>
+  </body>
+</html>
